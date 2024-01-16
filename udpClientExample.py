@@ -1,6 +1,13 @@
+# מייבא את ספריית סוקט
 import socket
-s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-s.sendto(b'Hello world', ('127.0.0.1', 12345))
+# יוצר את החיבור של הסוקט,
+# AF_INET - משתמש בכתובת IPV4
+# DGRAM - משתמשים בפרוטוקול UDP לתקשורת.
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) 
+# שולח הודעה שלום עולם לכתובת 127.0.0.1 איי-פי, דרך פורט 12345
+s.sendto(b'Hello world', ('127.0.0.1', 12345)) 
+# מקבל מידע בחבילות של 1024 בתים כצמד, טאפל ושומר בדאטא את ההודעה ובאדרס את הכתובת ממנה נשלח
 data, addr = s.recvfrom(1024)
+# מדפיס את ההודעה שקיבל ואת הכתובת ממנה קיבל
 print(str(data), addr)
 s.close()
