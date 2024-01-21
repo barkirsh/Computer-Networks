@@ -1,6 +1,7 @@
 import socket
 import sys
 
+
 def load_ip_mapping(file_path):
     ip_mapping = {}
     with open(file_path, 'r') as file:
@@ -9,6 +10,7 @@ def load_ip_mapping(file_path):
             ip_mapping[domain] = ip
     return ip_mapping
 
+
 def udp_server(ip_mapping, my_host='localhost', my_port=12345, parent_ip='localhost',
                parent_port=12346, ips_file_name='default_ips.txt'):
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -16,15 +18,25 @@ def udp_server(ip_mapping, my_host='localhost', my_port=12345, parent_ip='localh
     print(f"Server listening on {my_host}:{my_port}")
 
     while True:
+        # get a domain from client
         data, client_address = server_socket.recvfrom(1024)
         domain = data.decode('utf-8')
 
         if domain in ip_mapping:
             response = ip_mapping[domain].encode('utf-8')
         else:
-            response = b"IP not found for the given domain."
+            print("response = IP not found for the given domain. go to father")
+            # Forward the request to the parent server
+            server_socket.sendto(domain.encode('utf-8'), (parent_ip, parent_port))
+            data, ip_parent = server_socket.recvfrom(1024)
+            ip_domain = data.decode('utf-8')
+
+            # Update the local mapping with the received IP from the parent server
+            ip_mapping[domain] = ip_domain
+            response = ip_domain.encode('utf-8')
 
         server_socket.sendto(response, client_address)
+
 
 if __name__ == "__main__":
     if len(sys.argv) == 0:
