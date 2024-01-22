@@ -13,7 +13,7 @@ def load_ip_mapping(file_path):
 
 def insert_map_to_file(file_path, domain, ip):
     with open(file_path, 'a') as file:
-        file.write('{},{}\n'.format(domain, ip))
+        file.write('\n{},{}\n'.format(domain, ip))
 
     return None
 

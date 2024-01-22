@@ -23,7 +23,7 @@ def udp_client(serverIP, serverPort):
 
 if __name__ == "__main__":
     if len(sys.argv) == 0:
-        print("Usage: python part3_client.py <server_ip> <server_port>")
+        print("Usage: python client.py <server_ip> <server_port>")
         sys.exit(1)
 
     serverIP = sys.argv[1]
