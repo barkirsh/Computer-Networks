@@ -11,7 +11,7 @@ def load_ip_mapping(file_path):
     return ip_mapping
 
 
-def udp_server(ip_mapping, my_host='localhost', my_port=12345, parent_ip='localhost',
+def udp_server(ip_mapping, my_host='0.0.0.0', my_port=12345, parent_ip='localhost',
                parent_port=12346, ips_file_name='default_ips.txt'):
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     server_socket.bind((my_host, my_port))  # Fix here: use my_host and my_port
