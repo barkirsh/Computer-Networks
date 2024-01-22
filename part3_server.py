@@ -11,6 +11,13 @@ def load_ip_mapping(file_path):
     return ip_mapping
 
 
+def insert_map_to_file(file_path, domain, ip):
+    with open(file_path, 'a') as file:
+        file.write('{},{}\n'.format(domain, ip))
+
+    return None
+
+
 def udp_server(ip_mapping, my_host='0.0.0.0', my_port=12345, parent_ip='localhost',
                parent_port=12346, ips_file_name='default_ips.txt'):
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -34,6 +41,9 @@ def udp_server(ip_mapping, my_host='0.0.0.0', my_port=12345, parent_ip='localhos
             # Update the local mapping with the received IP from the parent server
             ip_mapping[domain] = ip_domain
             response = ip_domain.encode('utf-8')
+
+            #insert the new mapping into the file
+            insert_map_to_file(ips_file_name,domain, ip_domain)
 
         server_socket.sendto(response, client_address)
 
