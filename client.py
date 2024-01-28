@@ -3,6 +3,16 @@ import sys
 
 
 def udp_client(serverIP, serverPort):
+    """
+    Run a simple UDP client that sends domain queries to a server.
+
+    Parameters:
+    - serverIP (str): The IP address of the server.
+    - serverPort (int): The port number of the server.
+
+    Returns:
+    - None
+    """
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     while True:
