@@ -10,4 +10,5 @@ s.sendto(b'Hello world', ('127.0.0.1', 12345))
 data, addr = s.recvfrom(1024)
 # מדפיס את ההודעה שקיבל ואת הכתובת ממנה קיבל
 print(str(data), addr)
+# סגירת החיבור
 s.close()
