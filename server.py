@@ -3,6 +3,15 @@ import sys
 
 
 def load_ip_mapping(file_path):
+     """
+    Load IP mappings from a file into a dictionary.
+
+    Parameters:
+    - file_path (str): The path to the file containing domain-to-IP mappings.
+
+    Returns:
+    - dict: A dictionary containing domain-to-IP mappings.
+    """
     ip_mapping = {}
     with open(file_path, 'r') as file:
         for line in file:
@@ -12,6 +21,17 @@ def load_ip_mapping(file_path):
 
 
 def insert_map_to_file(file_path, domain, ip):
+        """
+    Insert a new domain-to-IP mapping into the specified file.
+
+    Parameters:
+    - file_path (str): The path to the file to be updated.
+    - domain (str): The domain to be mapped.
+    - ip (str): The corresponding IP address.
+
+    Returns:
+    - None
+    """
     with open(file_path, 'a') as file:
         file.write('{},{}\n'.format(domain, ip))
 
@@ -20,6 +40,20 @@ def insert_map_to_file(file_path, domain, ip):
 
 def udp_server(ip_mapping, my_host='0.0.0.0', my_port=12345, parent_ip='localhost',
                parent_port=12346, ips_file_name='default_ips.txt'):
+        """
+    Run a UDP server that handles domain-to-IP mapping requests.
+
+    Parameters:
+    - ip_mapping (dict): A dictionary containing existing domain-to-IP mappings.
+    - my_host (str): The host IP to bind the server socket to (default: '0.0.0.0').
+    - my_port (int): The port to bind the server socket to (default: 12345).
+    - parent_ip (str): The IP address of the parent server to forward requests (default: 'localhost').
+    - parent_port (int): The port of the parent server to forward requests (default: 12346).
+    - ips_file_name (str): The file name to store domain-to-IP mappings (default: 'default_ips.txt').
+
+    Returns:
+    - None
+    """
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     server_socket.bind((my_host, my_port))  # Fix here: use my_host and my_port
     print(f"Server listening on {my_host}:{my_port}")
